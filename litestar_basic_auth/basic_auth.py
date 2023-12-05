@@ -4,7 +4,6 @@ from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
 from typing import Any, Generic
 
-
 from litestar.connection import ASGIConnection
 from litestar.exceptions import NotAuthorizedException
 from litestar.middleware import (
@@ -104,9 +103,8 @@ class BasicAuth(
     auth_header: str = "Authorization"
     description: str = "Basic Auth"
     openapi_security_scheme_name: str = "BasicAuth"
-    authentication_middleware_class: type[AbstractAuthenticationMiddleware] = field(
-        default=BasicAuthMiddleware
-    )
+    authentication_middleware_class: type[AbstractAuthenticationMiddleware] = BasicAuthMiddleware
+
     exclude_http_methods: Sequence[Method] | None = field(
         default_factory=lambda: ["OPTIONS", "HEAD"]
     )

@@ -1,15 +1,16 @@
+from dataclasses import dataclass
 from typing import Any
 
 from litestar import Litestar, Request, get
 from litestar.connection import ASGIConnection
 from litestar.datastructures import State
-from msgspec import Struct
 
-from litestar_basic_auth import BasicAuth, BasicAuthCredentials
+from litestar_basic_auth import BasicAuthConfig, BasicAuthCredentials, BasicAuthPlugin
 
 
 # This can be a dataclass, Pydantic model, msgspec struct or anything
-class User(Struct):
+@dataclass
+class User:
     name: str
     password: str
 
@@ -33,12 +34,9 @@ async def get_user(request: Request[User, BasicAuthCredentials, State]) -> str:
     return request.user.name
 
 
-basic_auth = BasicAuth[User](
-    retrieve_user_handler,
-    exclude=["schema"],
-)
-
 app = Litestar(
     [get_user],
-    on_app_init=[basic_auth.on_app_init],
+    plugins=[
+        BasicAuthPlugin(BasicAuthConfig(retrieve_user_handler, exclude=["schema"]))
+    ],
 )

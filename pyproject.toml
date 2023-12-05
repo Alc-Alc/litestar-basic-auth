@@ -1,18 +1,18 @@
 [tool.poetry]
 name = "litestar-basic-auth"
-version = "0.1.0"
+version = "0.0.0"
 description = ""
 authors = ["Alc-Alc <alc@localhost>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-litestar = {extras = ["standard"], version = "^2.3.2"}
-pydantic = {extras = ["email"], version = "^2.5.2"}
+litestar = "^2.4.2"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
+coverage = "^7.3.2"
 
 [build-system]
 requires = ["poetry-core"]
